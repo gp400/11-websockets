@@ -11,10 +11,15 @@ wss.on('connection', function connection(ws) {
     ws.on('error', console.error);
 
     ws.on('message', function message(data) {
-        console.log('received: %s', data);
+        console.log('Desde el cliente', data);
+        const payload = {
+            type: 'custom-message',
+            payload: data.toString()
+        }
+        ws.send(JSON.stringify(payload));
     });
 
-    ws.send('Hola desde el servidor');
+    // ws.send('Hola desde el servidor');
 
     ws.on('close', () => {
         console.log('Client disconnected')
